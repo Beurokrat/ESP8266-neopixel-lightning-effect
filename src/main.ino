@@ -35,13 +35,22 @@ void blue()
 {
   sprintf(printBuffer, "%d blue", randomNumber);
   Serial.println(printBuffer);
-  for (int i = 0; i < 10; i++)
+  for (int i = 8; i < 25; i++)
   {
-    leds[25 + i].setRGB(0, 223, 252);
-    leds[25 - i].setRGB(0, 223, 252);
+    leds[i].setRGB(253, 35, 208);
     FastLED.show();
     FastLED.delay(30);
   }
+  for (int i = 8; i < 25; i++)
+  {
+    for(int j= 0 ; j<11;j++)
+      leds[i+j].setRGB(0, 0, 0);
+    leds[i].setRGB(0, 223, 0);
+    FastLED.show();
+    FastLED.delay(30);
+  }
+  FastLED.delay(300);
+  clearLight();
 }
 
 void clearLight()
@@ -58,8 +67,6 @@ void flashLight()
     leds[i].setRGB(255, 255, 255);
   FastLED.show();
   FastLED.delay(500);
-  FastLED.clear();
-  FastLED.delay(500);
 }
 
 void lightning()
@@ -67,44 +74,21 @@ void lightning()
   fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
   FastLED.show();
   FastLED.delay(2000);
-  fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-  FastLED.show();
+  fill_solid(leds, NUM_LEDS, CRGB(130, 130, 130));
   FastLED.delay(120);
-  fill_solid(leds, NUM_LEDS, CRGB(0, 223, 252));
+  fill_solid(leds, NUM_LEDS, CRGB(70, 70, 70));
   FastLED.show();
   FastLED.delay(80);
   fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
   FastLED.show();
   FastLED.delay(200);
-  fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
+  fill_solid(leds, NUM_LEDS, CRGB(130, 130, 130));
   FastLED.show();
   FastLED.delay(130);
   fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
   FastLED.show();
 }
 
-void randomSectionBlue__test()
-{
-  int i = sectionStart = random(18);
-  sectionEnd = random(16);
-  speed = random(5) + 1;
-  sprintf(printBuffer, "%d randomSectionBlue --st = %d --end = %d : speed = %d", randomNumber, sectionStart, sectionEnd, speed * 15);
-  Serial.println(printBuffer);
-  int end = sectionStart + sectionEnd;
-  FastLED.delay(1000);
-
-  while (i < sectionStart + sectionEnd)
-  {
-    leds[i].setRGB(0, 223, 252);
-    FastLED.show();
-    FastLED.delay(15 * speed);
-    sprintf(printBuffer, "%d", i);
-    Serial.println(printBuffer);
-    i++;
-  }
-  FastLED.delay(1800);
-  clearLight();
-}
 
 int t = 0;
 void randomSectionBlue()
@@ -265,12 +249,14 @@ void loop()
     blue();
     break;
   case 4:
+    blue();
+    FastLED.delay(3500);
     yellow();
     FastLED.delay(3500);
     randomSectionBlue();
     FastLED.delay(3500);
-    flashLight();
-    FastLED.delay(4000);
+    lightning();
+    FastLED.delay(3000);
     break;
   case 5:
     randomSectionBlue();
